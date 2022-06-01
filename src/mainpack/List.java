@@ -30,21 +30,6 @@ public class List {
     }
 
     public void delete(Object d) {
-       /* Node newHead = new Node(0);
-        newHead.next = head;
-        Node previous = newHead;
-        Node current = head;
-
-        while (current != null) {
-            if (current.data.equals(d)) {
-                previous.next = current.next;
-            } else {
-                previous = current;
-            }
-            current = current.next;
-        }
-        head = newHead.next;*/
-
         Node currentNode = head;
         Node previousNode = null;
 
