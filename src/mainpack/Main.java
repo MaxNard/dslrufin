@@ -33,7 +33,7 @@ class Main
 
 		Parser parser = new Parser(toktok);
 		RootBasicNode root = parser.analyzeTokenList();
-		System.out.println("Интерпретатор:");
+		System.out.println("Работа интерпретатора:");
 		Interpreter interpreter = new Interpreter();
 		for(int i = 0; i<root.linesR.size(); i++) {
 			interpreter.run(root.linesR.get(i));

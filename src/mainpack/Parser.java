@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Parser {
     ArrayList<Token> tokens;
-    int pos=0;
+    int pos = 0;
 
     public Parser(ArrayList<Token> tokens) {
         this.tokens = tokens;
@@ -31,12 +31,13 @@ public class Parser {
     }
 
     public RootBasicNode analyzeTokenList(){
-        RootBasicNode root=new RootBasicNode();
+        RootBasicNode root = new RootBasicNode();
         while (pos<tokens.size()){
-            BasicNode codeStringNode= analyzeLine();
+            BasicNode codeStringNode = analyzeLine();
             require(new String[]{"КОНЕЦ"});
             root.addNode(codeStringNode);
         }
+        System.out.println("Парсер не выдал ошибок.");
         return root;
     }
 
@@ -50,37 +51,37 @@ public class Parser {
          throw new Error("Ожидается переменная или число на позиции: "+pos);
     }
 
-    public BasicNode analyzePar(){
+    public BasicNode analyzeBrackets(){
         if (tokens.get(pos).type.typeName.equals("Л_СКОБКА")){
             pos++;
-            BasicNode node = analyzeStatement();
+            BasicNode nodeBrackets = analyzeStatement();
             require(new String[]{"П_СКОБКА"});
-            return node;
+            return nodeBrackets;
         }
         else
             return parseVarNum();
     }
 
-    public BasicNode analyzeUmDel(){
-        BasicNode leftVal = analyzePar();
+    public BasicNode analyzeMultDiv(){
+        BasicNode leftValue = analyzeBrackets();
         Token operator = matchThis(new String[]{"УМНОЖИТЬ","РАЗДЕЛИТЬ"});
         while (operator!=null){
-            BasicNode rightVal = analyzePar();
-            leftVal = new TwoOpNode(operator,leftVal,rightVal);
+            BasicNode rightValue = analyzeBrackets();
+            leftValue = new TwoOpNode(operator,leftValue,rightValue);
             operator = matchThis(new String[]{"УМНОЖИТЬ","РАЗДЕЛИТЬ"});
         }
-        return leftVal;
+        return leftValue;
     }
 
     public BasicNode analyzeStatement(){
-        BasicNode leftVal = analyzeUmDel();
+        BasicNode leftValue = analyzeMultDiv();
         Token operator = matchThis(new String[]{"ПЛЮС","МИНУС"});
         while (operator!=null){
-            BasicNode rightVal= analyzeUmDel();
-            leftVal=new TwoOpNode(operator,leftVal,rightVal);
-            operator= matchThis(new String[]{"ПЛЮС","МИНУС"});
+            BasicNode rightValue= analyzeMultDiv();
+            leftValue = new TwoOpNode(operator,leftValue,rightValue);
+            operator = matchThis(new String[]{"ПЛЮС","МИНУС"});
         }
-        return leftVal;
+        return leftValue;
     }
 
     public BasicNode analyzeLine(){
@@ -89,8 +90,8 @@ public class Parser {
                 BasicNode varNode = parseVarNum();
                 Token operator = matchThis(new String[]{"РАВНО", "ДОБАВИТЬ", "УДАЛИТЬ", "ПОЛУЧИТЬ"});
                 if (operator != null) {
-                    BasicNode rightVal = analyzeStatement();
-                    return new TwoOpNode(operator, varNode, rightVal);
+                    BasicNode rightValue = analyzeStatement();
+                    return new TwoOpNode(operator, varNode, rightValue);
                 }
                 throw new Error("После переменной ожидается бинарный оператор на позиции:" + pos);
             case "ВЫВОД":
@@ -112,16 +113,16 @@ public class Parser {
    }
 
     public BasicNode getLines(){//Для if, else, while, for
-        BasicNode codeStringNode= analyzeLine();
+        BasicNode codeStringNode = analyzeLine();
         require(new String[]{"КОНЕЦ"});
         return codeStringNode;
     }
 
     public BasicNode analyzeIf(){
-        BasicNode leftVal= analyzeStatement();
-        Token operator= matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
-        BasicNode rightVal= analyzeStatement();
-        IfBasicNode ifNode=new IfBasicNode(operator,leftVal,rightVal);
+        BasicNode leftValue = analyzeStatement();
+        Token operator = matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
+        BasicNode rightValue = analyzeStatement();
+        IfBasicNode ifNode = new IfBasicNode(operator,leftValue,rightValue);
         require(new String[]{"ЛФ_СКОБКА"});
         while(!tokens.get(pos).type.typeName.equals("ПФ_СКОБКА")) {
             ifNode.addThenOperations(getLines());
@@ -140,19 +141,19 @@ public class Parser {
         return ifNode;
    }
     public BasicNode analyzeFor(){
-        BasicNode leftVal= analyzeStatement();
-        Token operator= matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
-        BasicNode rightVal= analyzeStatement();
+        BasicNode leftValue = analyzeStatement();
+        Token operator = matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
+        BasicNode rightValue = analyzeStatement();
 
         require(new String[]{"КОНЕЦ"});
 
         BasicNode varNode = parseVarNum();
         Token assign = matchThis(new String[]{"РАВНО"});
-        BasicNode rightActVal = analyzeStatement();
-        TwoOpNode action = new TwoOpNode(assign, varNode, rightActVal);
+        BasicNode rightActValue = analyzeStatement();
+        TwoOpNode action = new TwoOpNode(assign, varNode, rightActValue);
         if (assign == null)
             throw new Error("После переменной ожидается = на позиции:"+pos);
-        ForBasicNode forNode= new ForBasicNode(operator,leftVal,rightVal,action);
+        ForBasicNode forNode = new ForBasicNode(operator,leftValue,rightValue,action);
         require(new String[]{"ЛФ_СКОБКА"});
         while(!tokens.get(pos).type.typeName.equals("ПФ_СКОБКА")) {
             forNode.addOperations(getLines());
@@ -163,10 +164,10 @@ public class Parser {
         return forNode;
    }
     public BasicNode analyzeWhile(){
-        BasicNode leftVal= analyzeStatement();
-        Token operator= matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
-        BasicNode rightVal= analyzeStatement();
-        WhileBasicNode whileNode=new WhileBasicNode(operator,leftVal,rightVal);
+        BasicNode leftValue = analyzeStatement();
+        Token operator = matchThis(new String[]{"МЕНЬШЕ","БОЛЬШЕ","РАВЕНСТВО"});
+        BasicNode rightValue = analyzeStatement();
+        WhileBasicNode whileNode = new WhileBasicNode(operator,leftValue,rightValue);
         require(new String[]{"ЛФ_СКОБКА"});
         while(!tokens.get(pos).type.typeName.equals("ПФ_СКОБКА")) {
             whileNode.addOperations(getLines());
@@ -176,9 +177,10 @@ public class Parser {
         pos++;
         return whileNode;
     }
+
     public BasicNode analyzeList(){
-        Token type= matchThis(new String[]{"СПИСОК"});
-        BasicNode var=parseVarNum();
+        Token type = matchThis(new String[]{"СПИСОК"});
+        BasicNode var = parseVarNum();
         return new ListBasicNode(type,var);
     }
 }

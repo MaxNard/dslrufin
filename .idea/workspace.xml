@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df9925d1-1005-4d2d-8b15-8e70e93e08e2" name="Changes" comment="Метод удаления из списка изменён.&#10;В текстовый файл кода добавлены теста для удаления: головы и хвоста" />
+    <list default="true" id="df9925d1-1005-4d2d-8b15-8e70e93e08e2" name="Changes" comment="Удалены лишние переменные">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/folder/mainpack/Interpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/folder/mainpack/Interpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/folder/mainpack/List$Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/folder/mainpack/List$Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/folder/mainpack/List.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/folder/mainpack/List.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/folder/mainpack/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/folder/mainpack/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainpack/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainpack/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainpack/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainpack/Parser.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,13 +98,28 @@
       <option name="project" value="LOCAL" />
       <updated>1654112069524</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Метод удаления из списка изменён.&#10;В текстовый файл кода добавлены теста для удаления: головы и хвоста">
+      <created>1654112254838</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654112254838</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Метод удаления из списка изменён.&#10;В текстовый файл кода добавлены теста для удаления: головы и хвоста">
+      <created>1654112316811</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654112316811</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="final" />
     <MESSAGE value="Метод удаления из списка изменён.&#10;В текстовый файл кода добавлены теста для удаления: головы и хвоста" />
-    <option name="LAST_COMMIT_MESSAGE" value="Метод удаления из списка изменён.&#10;В текстовый файл кода добавлены теста для удаления: головы и хвоста" />
+    <MESSAGE value="Удалены лишние переменные" />
+    <option name="LAST_COMMIT_MESSAGE" value="Удалены лишние переменные" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

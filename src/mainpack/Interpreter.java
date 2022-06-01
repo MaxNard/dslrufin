@@ -4,21 +4,20 @@ import java.util.HashMap;
 
 public class Interpreter {
 
-    public static HashMap<String, List> someLists =new HashMap<>();
-    public static HashMap<String, String> someVars =new HashMap<>();
+    public static HashMap<String, List> someLists = new HashMap<>();
+    public static HashMap<String, String> someVars = new HashMap<>();
 
     public String run(BasicNode node){
 
-        if (node.getClass()== VarBasicNode.class) {
+        if (node.getClass() == VarBasicNode.class) {
             return someVars.get(((VarBasicNode) node).tokVar.value);
         }
-        if (node.getClass()== NumberBasicNode.class) {
+        if (node.getClass() == NumberBasicNode.class) {
             return ((NumberBasicNode) node).number.value;
         }
-        if (node.getClass()== OneOpNode.class) {
+        if (node.getClass() == OneOpNode.class) {
             if (((OneOpNode) node).operator.type.typeName.equals("ВЫВОД")) {
                 if (((OneOpNode) node).value.getClass() == VarBasicNode.class) {
-                    VarBasicNode a = (VarBasicNode) ((OneOpNode) node).value;
                         System.out.println(this.run(((OneOpNode) node).value));
                 }
                 else System.out.println(this.run(((OneOpNode) node).value));
@@ -37,15 +36,18 @@ public class Interpreter {
                 if (someLists.containsKey(varNode.tokVar.value)){
                     int rightValue = Integer.parseInt(run(((TwoOpNode) node).rV));
                     switch (((TwoOpNode) node).op.type.typeName) {
-                        case "ДОБАВИТЬ":
+                        case "ДОБАВИТЬ" -> {
                             someLists.get(varNode.tokVar.value).add(rightValue);
                             return "";
-                        case "ПОЛУЧИТЬ":
+                        }
+                        case "ПОЛУЧИТЬ" -> {
                             System.out.println(someLists.get(varNode.tokVar.value).get(rightValue));
                             return "";
-                        case "УДАЛИТЬ":
+                        }
+                        case "УДАЛИТЬ" -> {
                             someLists.get(varNode.tokVar.value).delete(rightValue);
                             return "";
+                        }
                     }
                 }
             }
@@ -99,9 +101,9 @@ public class Interpreter {
                     break;
             }
         }
-        if (node.getClass()== WhileBasicNode.class){
-            int left=Integer.parseInt(this.run(((WhileBasicNode) node).lV));
-            int right=Integer.parseInt(this.run(((WhileBasicNode) node).rV));
+        if (node.getClass() == WhileBasicNode.class){
+            int left = Integer.parseInt(this.run(((WhileBasicNode) node).lV));
+            int right = Integer.parseInt(this.run(((WhileBasicNode) node).rV));
             switch (((WhileBasicNode) node).op.type.typeName) {
                 case "МЕНЬШЕ":
                     while (left < right) {
@@ -129,9 +131,9 @@ public class Interpreter {
                     break;
             }
         }
-        if (node.getClass()== ForBasicNode.class){
-            int left=Integer.parseInt(this.run(((ForBasicNode) node).lV));
-            int right=Integer.parseInt(this.run(((ForBasicNode) node).rV));
+        if (node.getClass() == ForBasicNode.class){
+            int left = Integer.parseInt(this.run(((ForBasicNode) node).lV));
+            int right = Integer.parseInt(this.run(((ForBasicNode) node).rV));
             switch (((ForBasicNode) node).opFor.type.typeName) {
                 case "МЕНЬШЕ":
                     while (left < right) {
@@ -162,12 +164,11 @@ public class Interpreter {
                     break;
             }
         }
-        if (node.getClass()== ListBasicNode.class){
-            VarBasicNode varNode=(VarBasicNode)((ListBasicNode)node).var;
-            switch(((ListBasicNode) node).type.type.typeName){
-                case "СПИСОК":
-                    someLists.put(varNode.tokVar.value,new List());
-                    return "";
+        if (node.getClass() == ListBasicNode.class){
+            VarBasicNode varNode = (VarBasicNode)((ListBasicNode)node).var;
+            if(((ListBasicNode) node).type.type.typeName.equals("СПИСОК")){
+                someLists.put(varNode.tokVar.value,new List());
+                return "";
             }
         }
         return "";
