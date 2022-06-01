@@ -20,7 +20,6 @@ public class Interpreter {
                 if (((OneOpNode) node).value.getClass() == VarBasicNode.class) {
                         System.out.println(this.run(((OneOpNode) node).value));
                 }
-                else System.out.println(this.run(((OneOpNode) node).value));
             }
         }
         if (node.getClass()== TwoOpNode.class) {
