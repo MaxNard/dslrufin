@@ -9,7 +9,7 @@ public class List {
 
     public void add(Object data) {
         if (head != null) {
-            head.appendToTail(data);
+            head.addToTail(data);
         } else {
             head = new Node(data);
         }
@@ -55,7 +55,7 @@ public class List {
             this.data = data;
         }
 
-        void appendToTail(Object d) {
+        void addToTail(Object d) {
 
             Node end = new Node(d);
             Node n = head;
