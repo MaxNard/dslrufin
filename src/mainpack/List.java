@@ -18,7 +18,7 @@ public class List {
 
     public Object get(int index){
         Node current = head;
-        for(int i=0;i<index;i++){
+        for(int i=0;i < index;i++){
             if(current==null){
                 return -1;
             }
@@ -30,7 +30,7 @@ public class List {
     }
 
     public void delete(Object d) {
-        Node newHead = new Node(0);
+       /* Node newHead = new Node(0);
         newHead.next = head;
         Node previous = newHead;
         Node current = head;
@@ -43,7 +43,23 @@ public class List {
             }
             current = current.next;
         }
-        head = newHead.next;
+        head = newHead.next;*/
+
+        Node currentNode = head;
+        Node previousNode = null;
+
+        while(currentNode.next != null)
+        {
+            if (currentNode.data.equals(d)) {
+                if (currentNode == head) {
+                    head = currentNode.next;
+                } else {
+                    previousNode.next = currentNode.next;
+                }
+            }
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+        }
     }
 
     public class Node {
