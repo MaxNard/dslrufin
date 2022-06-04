@@ -150,10 +150,10 @@ public class Parser {
         BasicNode varNode = parseVarNum();
         Token assign = matchThis(new String[]{"РАВНО"});
         BasicNode rightActValue = analyzeStatement();
-        TwoOpNode action = new TwoOpNode(assign, varNode, rightActValue);
+        TwoOpNode work = new TwoOpNode(assign, varNode, rightActValue);
         if (assign == null)
             throw new Error("После переменной ожидается = на позиции:"+pos);
-        ForBasicNode forNode = new ForBasicNode(operator,leftValue,rightValue,action);
+        ForBasicNode forNode = new ForBasicNode(operator,leftValue,rightValue,work);
         require(new String[]{"ЛФ_СКОБКА"});
         while(!tokens.get(pos).type.typeName.equals("ПФ_СКОБКА")) {
             forNode.addOperations(getLines());
