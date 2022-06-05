@@ -180,6 +180,8 @@ public class Parser {
 
     public BasicNode analyzeList(){
         Token type = matchThis(new String[]{"СПИСОК"});
+        require(new String[]{"ПЕРЕМЕННАЯ"});
+        pos--;
         BasicNode var = parseVarNum();
         return new ListBasicNode(type,var);
     }
